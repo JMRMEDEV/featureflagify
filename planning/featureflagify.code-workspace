@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "name": "📋 planning",
+      "path": "."
+    },
+    {
+      "name": "📦 api",
+      "path": "../api"
+    },
+    {
+      "name": "📦 ui",
+      "path": "../ui"
+    },
+    {
+      "name": "📦 shared",
+      "path": "../shared"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true
+    }
+  }
+}
