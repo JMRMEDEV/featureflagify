@@ -6,3 +6,7 @@ export { InMemoryFlagRepository } from "./in-memory-flag-repository";
 export { FlagService } from "./flag-service";
 export type { CallContext, FlagServiceDeps, ToggleResult } from "./flag-service";
 export type { Logger, LogFields } from "./logger";
+export { createJsonLogger } from "./json-logger";
+export type { JsonLoggerOptions } from "./json-logger";
+export { ConfigError, parseConfig } from "./config";
+export type { ApiConfig } from "./config";
