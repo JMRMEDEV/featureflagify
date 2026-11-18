@@ -139,6 +139,14 @@ describe("errorEnvelopeSchema", () => {
     expect(errorEnvelopeSchema.safeParse(withDetails).success).toBe(true);
   });
 
+  it("parses INTERNAL_ERROR without details", () => {
+    const parsed = errorEnvelopeSchema.safeParse({
+      error: { code: "INTERNAL_ERROR", message: "Unexpected error", requestId: "r1" },
+    });
+    expect(parsed.success).toBe(true);
+    expect(parsed.success && parsed.data.error.code).toBe("INTERNAL_ERROR");
+  });
+
   it("rejects unknown codes and missing request id", () => {
     expect(errorEnvelopeSchema.safeParse({ error: { code: "NOPE", message: "m", requestId: "r" } }).success).toBe(false);
     expect(errorEnvelopeSchema.safeParse({ error: { code: "FLAG_EXISTS", message: "m" } }).success).toBe(false);

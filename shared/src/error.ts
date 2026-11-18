@@ -4,6 +4,7 @@ export const errorCodeSchema = z.enum([
   "VALIDATION_ERROR",
   "FLAG_EXISTS",
   "FLAG_NOT_FOUND",
+  "INTERNAL_ERROR",
 ]);
 export type ErrorCode = z.infer<typeof errorCodeSchema>;
 
