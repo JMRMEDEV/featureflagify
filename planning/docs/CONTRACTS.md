@@ -70,16 +70,28 @@ Evaluation rules
 `details` is present only for `VALIDATION_ERROR` and is a list of
 `{ field: string, message: string }`, one per failing field.
 
-The `code` values are `VALIDATION_ERROR`, `FLAG_EXISTS` and `FLAG_NOT_FOUND`. Request
+The `code` values are `VALIDATION_ERROR`, `FLAG_EXISTS`, `FLAG_NOT_FOUND` and
+`INTERNAL_ERROR`. `INTERNAL_ERROR` is returned with status 500 for an unexpected error or a
+failed audit append, with a generic message and no internal detail. Request
 bodies and the audit query are strict: unknown fields fail with `VALIDATION_ERROR`.
-`?flag=` is validated with the flag key schema.
+`?flag=` is validated with the flag key schema. A malformed or unreadable JSON body
+returns `VALIDATION_ERROR` with `details: [{ "field": "body", ... }]`. An unknown route
+returns `404 FLAG_NOT_FOUND` with the message "Route not found" (a dedicated code is a
+listed follow-up).
 
 ## Headers
 
 | Header | Direction | Rule |
 |--------|-----------|------|
 | `x-request-id` | request and response | Accepted if it is 1-128 printable characters, else replaced. Always returned |
-| `x-actor` | request | Optional, 1-100 characters. Recorded in the audit log. Not authenticated |
+| `x-actor` | request | Optional, 1-100 characters. Validated on POST and PATCH, where it is recorded in the audit log. Not authenticated |
+
+## API env variables
+
+| Variable | Meaning |
+|----------|---------|
+| `FLAGS_API_PORT` | Port the server listens on, default 3001. Binds to `127.0.0.1` |
+| `FLAGS_CORS_ORIGIN` | Allowed UI origin, default `http://localhost:5173`. One exact origin, no wildcard |
 
 ## Consumer env variables
 
