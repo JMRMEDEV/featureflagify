@@ -23,7 +23,7 @@ You build `ui/`: a Vite + React + TypeScript client for the flag API.
 - Inject `fetch` and timers so tests need no module mocks.
 - Env values are inlined at build time: they are a startup fallback, not a live control.
 - If `shared` or `api` must change, stop and report to the planner.
-- Accessibility is part of done: roles, labels, keyboard operation, announcements.
+- Accessibility is part of done: roles, labels, announcements.
 
 ## Before you report done
 
