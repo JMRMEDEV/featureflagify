@@ -77,7 +77,7 @@ Keys are created at runtime, so `shared` cannot list them at compile time.
 | D3 | `FlagRepository` interface with an in-memory implementation | Proposed |
 | D4 | Vitest in every package | Proposed |
 | D5 | Resolver reports the source of each value | Proposed |
-| D6 | React context for UI flag state, no state library | Proposed |
+| D6 | React context for UI flag state, no state library. `createFlagKit(registry)` builds the provider and hooks so keys are typed per registry. Any failed fetch falls back to env and defaults, with no stale API values | Proposed |
 | D7 | HermOS generates and structures `planning/` | Settled |
 | D8 | Disable only. No delete and no archive in this iteration | Settled |
 | D9 | Fastify for the one example HTTP adapter | Proposed |
@@ -104,7 +104,7 @@ add the reason, if implementation shows a better option.
 - Every request has an id: `x-request-id` is accepted or generated, returned in
   the response, and included in every log line and error body.
 - Logs are structured JSON with an `event` name, for example `flag_created`,
-  `flag_toggled`, `flag_invalid_record`.
+  `flag_toggled`, `flag_invalid_record`, `audit_append_failed`.
 - Create and toggle actions are written to the audit log.
 
 ## Security

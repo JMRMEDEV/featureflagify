@@ -13,7 +13,7 @@
 | Stories | RES-01 |
 | Depends on | TASK-007 |
 | Blocks | TASK-009 |
-| Status | ⬚ |
+| Status | ✅ |
 | Created | 2026-11-18 |
 
 ## Description
@@ -26,18 +26,18 @@ defaults. The fetch function is injected for tests.
 
 ## Acceptance Criteria
 
-- [ ] The first render uses env and defaults, and does not wait for the fetch.
-- [ ] A fetch that exceeds the timeout is aborted with `AbortController` and treated as a failure.
-- [ ] Network error, non-2xx, invalid JSON and a schema-invalid body each set `unavailable` and keep fallback values, without throwing.
-- [ ] A successful fetch replaces fallback values with API values and updates the state to `ok`.
-- [ ] `refresh` can be called after a failure and recovers when the API returns.
-- [ ] Concurrent refresh calls do not start overlapping requests.
-- [ ] `useFlag` returns `{ value, source }`.
+- [x] The first render uses env and defaults, and does not wait for the fetch.
+- [x] A fetch that exceeds the timeout is aborted with `AbortController` and treated as a failure.
+- [x] Network error, non-2xx, invalid JSON and a schema-invalid body each set `unavailable` and keep fallback values, without throwing.
+- [x] A successful fetch replaces fallback values with API values and updates the state to `ok`.
+- [x] `refresh` can be called after a failure and recovers when the API returns.
+- [x] Concurrent refresh calls do not start overlapping requests.
+- [x] `useFlag` returns `{ value, source }`.
 
 ## Verification
 
-- [ ] `npm test -w ui` passes with cases for success, each failure kind, timeout, recovery and the no-overlap guard.
-- [ ] Break the fallback once on purpose (for example, return an empty map on failure), confirm a test fails, and restore it.
+- [x] `npm test -w ui` passes with cases for success, each failure kind, timeout, recovery and the no-overlap guard.
+- [x] Break the fallback once on purpose (for example, return an empty map on failure), confirm a test fails, and restore it.
 
 ## Deferred
 
@@ -46,3 +46,4 @@ defaults. The fetch function is injected for tests.
 ## Comments
 
 - **2026-11-18 16:15** — Created. The source project had no fetch timeout and no tests for this path, which is why both are explicit here.
+- **2026-11-18 17:30** — Built by ffy-dev. Typecheck, lint and 58 tests in ui pass. Mutation proof on the failure fallback. Provider is built by `createFlagKit(registry)`. Wiring into App is TASK-009.

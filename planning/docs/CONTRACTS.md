@@ -55,7 +55,8 @@ Evaluation is for applications and returns only values.
 Evaluation rules
 - `GET /evaluate` never returns 404. A key absent from the map is unknown, and
   the consumer applies its env fallback and code default.
-- A toggle to the current value is accepted and does not write an audit entry.
+- A toggle to the current value is accepted and does not write an audit entry. A failed
+  create or toggle (400, 404, 409) writes none either.
 - A stored record that fails validation is left out of lists and the evaluate map and
   is logged as `flag_invalid_record`. `PATCH` on it returns `404 FLAG_NOT_FOUND` and
   `POST` with its key returns `409 FLAG_EXISTS`.
