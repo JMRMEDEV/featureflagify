@@ -8,6 +8,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
   },
+  "dependencies": {
+    "@featureflagify/shared": "*"
+  },
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@types/node": "20.19.43",
