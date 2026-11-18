@@ -1,0 +1,9 @@
+{
+  "name": "hermos",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "bin": { "hermos": "bin/hermos.js" },
+  "scripts": { "test": "node --test", "release:check": "node scripts/release-check.js" },
+  "engines": { "node": ">=20" }
+}
