@@ -14,7 +14,7 @@ As an operator, I want to list flags, create a flag, and enable or disable it, s
 - [ ] A key that does not match the key format is rejected with the failing field named.
 - [ ] Enabling or disabling a flag changes its state and `updatedAt`, and the list reflects it.
 - [ ] Toggling a flag that does not exist returns a not-found error.
-- [ ] The toggle is a labelled switch that works with the keyboard and announces its new state to assistive technology.
+- [ ] The toggle is a labelled switch that announces its new state to assistive technology.
 - [ ] A failed toggle returns the switch to its previous state and shows an error message.
 
 ## Notes
