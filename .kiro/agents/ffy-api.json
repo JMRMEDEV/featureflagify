@@ -1,0 +1,112 @@
+{
+  "name": "ffy-api",
+  "description": "Backend developer for api/ (framework-free flag service + one Fastify adapter, in-memory repository, audit log). Owns api/ only. No git.",
+  "prompt": "file://../../docs/agents/api.md",
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "code"
+  ],
+  "allowedTools": [
+    "read",
+    "grep",
+    "glob",
+    "code"
+  ],
+  "resources": [
+    "file://.kiro/steering/**/*.md",
+    "skill://.kiro/skills/*/SKILL.md",
+    "file://../../docs/agents/api.md",
+    "file://../../planning/docs/ARCHITECTURE.md",
+    "file://../../planning/docs/CONTRACTS.md",
+    "file://../../planning/docs/TESTING.md",
+    "file://../../planning/tasks/INDEX.md",
+    "file://../../planning/user-stories/INDEX.md"
+  ],
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "echo 'API: you own api/ only. The core (FlagService, FlagRepository, AuditLog) imports no HTTP framework; the adapter holds no flag rules. Validate every request with the shared Zod schemas; every outcome in planning/docs/CONTRACTS.md needs a test. See .kiro/steering/delegation.md'"
+      },
+      {
+        "command": "echo 'TYPESCRIPT: after EVERY .ts/.tsx change run the package typecheck (npm run typecheck -w <pkg>) and fix all errors before the next file. No any, no @ts-ignore, no unchecked casts; parse unknown input with the shared Zod schemas. See .kiro/steering/typescript-validation.md and skill typescript-validation.'"
+      },
+      {
+        "command": "echo 'GIT: you run NO mutating git. Report done and verified; the planner reviews the diff and commits with owner approval. See .kiro/steering/git.md'"
+      },
+      {
+        "command": "echo 'SECURITY - ABSOLUTE: never read or write ANY .env file (.env, .env.*, .envrc, including .env.example) or credential file. Never print secret values; ask the owner for what is missing. Start agents from the repository root. See .kiro/steering/security.md'"
+      }
+    ]
+  },
+  "keyboardShortcut": "ctrl+a",
+  "welcomeMessage": "Featureflagify API dev ready. I own api/. Contract changes go through ffy-shared.",
+  "toolsSettings": {
+    "read": {
+      "allowedPaths": [
+        "./**"
+      ],
+      "deniedPaths": [
+        "./**/.env",
+        "./**/.env.*",
+        "./**/.envrc",
+        "./**/*service-account*.json",
+        "./**/*credentials*.json",
+        "./**/*.pem",
+        "./**/*.key",
+        "./**/*.p12",
+        "./**/*.p8",
+        "./**/*.keystore",
+        "./**/*.jks",
+        "~/.ssh/**",
+        "~/.aws/**",
+        "~/.config/gcloud/**",
+        "~/.config/firebase/**",
+        "~/.config/configstore/**",
+        "~/.config/gh/**",
+        "~/.npmrc",
+        "./**/node_modules/**"
+      ]
+    },
+    "write": {
+      "allowedPaths": [
+        "./api/**"
+      ],
+      "deniedPaths": [
+        "./**/.env",
+        "./**/.env.*",
+        "./**/.envrc",
+        "./**/*service-account*.json",
+        "./**/*credentials*.json",
+        "./**/*.pem",
+        "./**/*.key",
+        "./**/*.p12",
+        "./**/*.p8",
+        "./**/*.keystore",
+        "./**/*.jks",
+        "./**/.git/**",
+        "./**/node_modules/**",
+        "./libs/**"
+      ]
+    },
+    "shell": {
+      "allowedCommands": [
+        "^npm (run )?(test|typecheck|lint)( -w (ui|api|shared))?( [^;&|`$()]*)?$"
+      ],
+      "deniedCommands": [
+        "(?s).*(^\\s*|[;&|(`\\n]\\s*)((sudo|xargs|time|nice|exec|command)\\s+)*(\\S*/)?find(\\s|$).*",
+        "(?s).*(^|[\\s\\\"'/=<>(;&|`])\\.env.*",
+        "(?s).*^echo.*(TOKEN|SECRET|API_KEY|PASSWORD|CREDENTIAL).*",
+        "(?s).*^printenv.*",
+        "(?s).*^env\\s*$.*",
+        "(?s).*^(npm|pnpm)\\s+(publish|login|adduser|token)\\b.*",
+        "(?s).*^yarn\\s+(npm\\s+)?publish.*",
+        "(?s).*(^|[;&|(]\\s*)git\\s+(-C\\s+\\S+\\s+)?(add|commit|push|pull|fetch|stash|reset|checkout|restore|clean|merge|rebase|cherry-pick|revert|tag|branch|switch|rm|mv|apply|am|init|clone|remote|config|worktree)\\b.*"
+      ],
+      "autoAllowReadonly": true
+    }
+  }
+}

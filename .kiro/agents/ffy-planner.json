@@ -1,0 +1,139 @@
+{
+  "name": "ffy-planner",
+  "description": "Planning orchestrator, architect and product owner. Maintains planning/ (HermOS), docs, steering and root config; delegates implementation; reviews evidence. The ONLY agent that runs mutating git, and only with owner approval per commit.",
+  "prompt": "file://../../docs/agents/planner.md",
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "code",
+    "web_fetch",
+    "subagent"
+  ],
+  "allowedTools": [
+    "read",
+    "grep",
+    "glob",
+    "code",
+    "subagent"
+  ],
+  "resources": [
+    "file://.kiro/steering/**/*.md",
+    "skill://.kiro/skills/*/SKILL.md",
+    "file://../../docs/agents/planner.md",
+    "file://../../planning/docs/ARCHITECTURE.md",
+    "file://../../planning/docs/CONTRACTS.md",
+    "file://../../planning/docs/TESTING.md",
+    "file://../../planning/tasks/INDEX.md",
+    "file://../../planning/user-stories/INDEX.md",
+    "file://../../README.md"
+  ],
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "echo 'PLANNER: orchestrator/architect/PO. You alone run git, one commit at a time after the owner approves the file list and message; never push without a request. Subagents implement and report; they never commit. Never author product code: delegate to ffy-api, ffy-dev, ffy-shared, ffy-qa with full context. See .kiro/steering/delegation.md'"
+      },
+      {
+        "command": "echo 'AUDIT: after editing planning/ run node .hermos/scripts/audit.js from planning/ and keep tasks/INDEX.md equal to the task files.'"
+      },
+      {
+        "command": "echo 'SECURITY - ABSOLUTE: never read or write ANY .env file (.env, .env.*, .envrc, including .env.example) or credential file. Never print secret values; ask the owner for what is missing. Start agents from the repository root. See .kiro/steering/security.md'"
+      }
+    ]
+  },
+  "keyboardShortcut": "ctrl+p",
+  "welcomeMessage": "Featureflagify planner ready. Orchestrator and sole committer. Start from planning/tasks/INDEX.md.",
+  "toolsSettings": {
+    "read": {
+      "allowedPaths": [
+        "./**"
+      ],
+      "deniedPaths": [
+        "./**/.env",
+        "./**/.env.*",
+        "./**/.envrc",
+        "./**/*service-account*.json",
+        "./**/*credentials*.json",
+        "./**/*.pem",
+        "./**/*.key",
+        "./**/*.p12",
+        "./**/*.p8",
+        "./**/*.keystore",
+        "./**/*.jks",
+        "~/.ssh/**",
+        "~/.aws/**",
+        "~/.config/gcloud/**",
+        "~/.config/firebase/**",
+        "~/.config/configstore/**",
+        "~/.config/gh/**",
+        "~/.npmrc",
+        "./**/node_modules/**"
+      ]
+    },
+    "write": {
+      "allowedPaths": [
+        "./planning/**",
+        "./docs/**",
+        "./.kiro/**",
+        "./README.md",
+        "./package.json",
+        "./tsconfig.base.json",
+        "./.gitignore",
+        "./.nvmrc"
+      ],
+      "deniedPaths": [
+        "./**/.env",
+        "./**/.env.*",
+        "./**/.envrc",
+        "./**/*service-account*.json",
+        "./**/*credentials*.json",
+        "./**/*.pem",
+        "./**/*.key",
+        "./**/*.p12",
+        "./**/*.p8",
+        "./**/*.keystore",
+        "./**/*.jks",
+        "./**/.git/**",
+        "./**/node_modules/**",
+        "./libs/**"
+      ]
+    },
+    "shell": {
+      "allowedCommands": [
+        "^git\\s+(-C\\s+\\S+\\s+)?(status|diff|log|show)\\b[^;&|`$()]*$",
+        "^node (planning/)?\\.hermos/scripts/audit\\.js( --quiet)?$",
+        "^npm (run )?(test|typecheck|lint)( -w (ui|api|shared))?( [^;&|`$()]*)?$"
+      ],
+      "deniedCommands": [
+        "(?s).*(^\\s*|[;&|(`\\n]\\s*)((sudo|xargs|time|nice|exec|command)\\s+)*(\\S*/)?find(\\s|$).*",
+        "(?s).*(^|[\\s\\\"'/=<>(;&|`])\\.env.*",
+        "(?s).*^echo.*(TOKEN|SECRET|API_KEY|PASSWORD|CREDENTIAL).*",
+        "(?s).*^printenv.*",
+        "(?s).*^env\\s*$.*",
+        "(?s).*^(npm|pnpm)\\s+(publish|login|adduser|token)\\b.*",
+        "(?s).*^yarn\\s+(npm\\s+)?publish.*",
+        "(?s).*--no-verify.*",
+        "(?s).*(^|[;&|(]\\s*)git\\s+(-C\\s+\\S+\\s+)?push\\b.*(-f\\b|--force).*",
+        "(?s).*(^|[;&|(]\\s*)git\\s+(-C\\s+\\S+\\s+)?reset\\s+--hard.*",
+        "(?s).*(^|[;&|(]\\s*)git\\s+(-C\\s+\\S+\\s+)?clean\\s+-[a-z]*f.*"
+      ],
+      "autoAllowReadonly": true
+    },
+    "web_fetch": {
+      "trusted": [
+        ".*kiro\\.dev.*",
+        ".*typescriptlang\\.org.*",
+        ".*(vite|vitest)\\.dev.*",
+        ".*react\\.dev.*",
+        ".*fastify\\.dev.*",
+        ".*zod\\.dev.*",
+        ".*openfeature\\.dev.*",
+        ".*developer\\.mozilla\\.org.*",
+        ".*w3\\.org.*",
+        ".*nodejs\\.org.*"
+      ]
+    }
+  }
+}
