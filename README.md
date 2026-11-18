@@ -26,3 +26,10 @@ Names come from [planning/docs/CONTRACTS.md](planning/docs/CONTRACTS.md). Create
 | `VITE_FLAGS_API_URL` | Base URL of the flag API |
 | `VITE_FLAGS_TIMEOUT_MS` | Fetch timeout, default 2000 |
 | `VITE_FF_<KEY>` | Fallback value for one flag: `true`, `1`, `false` or `0`. Other values are ignored |
+
+## API env variables
+
+| Variable | Meaning |
+|----------|---------|
+| `FLAGS_API_PORT` | Port the server listens on, default 3001. Binds to `127.0.0.1` |
+| `FLAGS_CORS_ORIGIN` | Allowed UI origin, default `http://localhost:5173`. One exact origin, no wildcard |
