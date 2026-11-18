@@ -5,7 +5,7 @@ The schemas below are implemented once in `shared` and imported by `api` and
 
 ## Flag key
 
-- Lowercase kebab-case: `^[a-z][a-z0-9-]{0,62}[a-z0-9]$`.
+- Lowercase kebab-case: `^[a-z][a-z0-9-]{0,62}[a-z0-9]$`. This means 2 to 64 characters.
 - Unique. Immutable after creation. A rename means a new flag.
 - Env name derived from the key: `new-checkout` becomes `VITE_FF_NEW_CHECKOUT`.
   The restricted character set keeps this mapping one-to-one.
@@ -18,8 +18,8 @@ type Flag = {
   name: string;           // 1-100 characters, defaults to the key
   description: string;    // 0-500 characters
   enabled: boolean;
-  createdAt: string;      // ISO 8601
-  updatedAt: string;      // ISO 8601
+  createdAt: string;      // ISO 8601 UTC, `Z` suffix, no offsets
+  updatedAt: string;      // ISO 8601 UTC, `Z` suffix, no offsets
 };
 ```
 
@@ -27,14 +27,14 @@ type Flag = {
 
 ```ts
 type AuditEntry = {
-  id: string;
+  id: string;             // non-empty
   flagKey: string;
   action: 'created' | 'enabled' | 'disabled';
   before: boolean | null; // null on creation
   after: boolean;
-  actor: string;          // x-actor header, "anonymous" when absent
-  requestId: string;
-  at: string;             // ISO 8601
+  actor: string;          // 1-100 characters, x-actor header, "anonymous" when absent
+  requestId: string;      // non-empty
+  at: string;             // ISO 8601 UTC, `Z` suffix, no offsets
 };
 ```
 
@@ -63,7 +63,12 @@ Evaluation rules
 { "error": { "code": "FLAG_EXISTS", "message": "A flag with this key already exists", "requestId": "…", "details": [] } }
 ```
 
-`details` is present only for `VALIDATION_ERROR` and lists the failing fields.
+`details` is present only for `VALIDATION_ERROR` and is a list of
+`{ field: string, message: string }`, one per failing field.
+
+The `code` values are `VALIDATION_ERROR`, `FLAG_EXISTS` and `FLAG_NOT_FOUND`. Request
+bodies and the audit query are strict: unknown fields fail with `VALIDATION_ERROR`.
+`?flag=` is validated with the flag key schema.
 
 ## Headers
 
