@@ -49,6 +49,12 @@ api  HTTP adapter (Fastify)
 Each resolution returns `{ value, source }`. Env values are inlined at build
 time, so they act as a startup fallback only.
 
+Dynamic env lookup works (tested in TASK-007 with Vite 8.3.8). A production build
+replaces `import.meta.env` with an object holding every `VITE_` variable present at
+build time, so `import.meta.env['VITE_FF_' + name]` resolves at runtime. The provider
+passes `import.meta.env` whole to the resolver, and no explicit variable list is
+needed. Every `VITE_` variable ends up in the bundle, so secrets never use that prefix.
+
 ## Flag keys (D2)
 
 Keys are created at runtime, so `shared` cannot list them at compile time.

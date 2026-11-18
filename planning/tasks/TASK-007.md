@@ -13,7 +13,7 @@
 | Stories | FLG-03, RES-01, RES-02 |
 | Depends on | TASK-003 |
 | Blocks | TASK-008 |
-| Status | ⬚ |
+| Status | ✅ |
 | Created | 2026-11-18 |
 
 ## Description
@@ -26,18 +26,18 @@ for each declared flag.
 
 ## Acceptance Criteria
 
-- [ ] `defineFlags({ 'new-checkout': false })` types hook arguments so an undeclared key fails typecheck. A test uses `@ts-expect-error` to prove it.
-- [ ] Resolution order is API, then env, then code default, and the result reports `api`, `env` or `default`.
-- [ ] Env parsing accepts `true`, `1`, `false`, `0` and ignores any other value.
-- [ ] A key absent from the API map falls through to env, then default.
-- [ ] Env variable names come from the shared helper.
-- [ ] Before relying on dynamic env lookup in Vite, test it. If it does not work, list the declared env variables explicitly and record the reason in `docs/ARCHITECTURE.md`.
-- [ ] The resolver is a pure function with no React or `fetch` imports.
+- [x] `defineFlags({ 'new-checkout': false })` types hook arguments so an undeclared key fails typecheck. A test uses `@ts-expect-error` to prove it.
+- [x] Resolution order is API, then env, then code default, and the result reports `api`, `env` or `default`.
+- [x] Env parsing accepts `true`, `1`, `false`, `0` and ignores any other value.
+- [x] A key absent from the API map falls through to env, then default.
+- [x] Env variable names come from the shared helper.
+- [x] Before relying on dynamic env lookup in Vite, test it. If it does not work, list the declared env variables explicitly and record the reason in `docs/ARCHITECTURE.md`.
+- [x] The resolver is a pure function with no React or `fetch` imports.
 
 ## Verification
 
-- [ ] `npm test -w ui` passes with a test for every branch of the order and for env parsing.
-- [ ] `npm run typecheck` passes.
+- [x] `npm test -w ui` passes with a test for every branch of the order and for env parsing.
+- [x] `npm run typecheck` passes.
 
 ## Deferred
 
@@ -46,3 +46,4 @@ for each declared flag.
 ## Comments
 
 - **2026-11-18 16:15** — Created.
+- **2026-11-18 17:15** — Built by ffy-dev. Typecheck, lint and 27 tests in ui pass. Mutation proof on the precedence. Vite dynamic env lookup works, so no explicit list is needed (recorded in ARCHITECTURE.md).

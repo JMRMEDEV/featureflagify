@@ -13,7 +13,7 @@
 | Stories | FLG-01, FLG-03, ARC-02 |
 | Depends on | TASK-003 |
 | Blocks | TASK-005, TASK-006 |
-| Status | ⬚ |
+| Status | ✅ |
 | Created | 2026-11-18 |
 
 ## Description
@@ -26,16 +26,16 @@ so a corrupt record is skipped with a log event and never hides other flags.
 
 ## Acceptance Criteria
 
-- [ ] `FlagService` imports no HTTP framework and no storage library.
-- [ ] Create stores a flag, off unless `enabled` is given, and rejects a duplicate key.
-- [ ] Toggle updates `enabled` and `updatedAt`, and fails for an unknown key.
-- [ ] Evaluate returns a key-to-boolean map of all valid flags.
-- [ ] A corrupt record is left out of the list and the map, a `flag_invalid_record` event is logged with the key, and other flags are unaffected.
-- [ ] Time and logging are injected, so tests need no module mocks.
+- [x] `FlagService` imports no HTTP framework and no storage library.
+- [x] Create stores a flag, off unless `enabled` is given, and rejects a duplicate key.
+- [x] Toggle updates `enabled` and `updatedAt`, and fails for an unknown key.
+- [x] Evaluate returns a key-to-boolean map of all valid flags.
+- [x] A corrupt record is left out of the list and the map, a `flag_invalid_record` event is logged with the key, and other flags are unaffected.
+- [x] Time and logging are injected, so tests need no module mocks.
 
 ## Verification
 
-- [ ] `npm test -w api` passes, including the corrupt-record case with a repository that returns one bad and one good record.
+- [x] `npm test -w api` passes, including the corrupt-record case with a repository that returns one bad and one good record.
 
 ## Deferred
 
@@ -44,3 +44,4 @@ so a corrupt record is skipped with a log event and never hides other flags.
 ## Comments
 
 - **2026-11-18 16:15** — Created. The corrupt-record case adapts a bug found in the source project, where one bad value disabled every flag.
+- **2026-11-18 17:15** — Built by ffy-api. Typecheck, lint and 14 tests in api pass. Mutation proof on the corrupt-record validation. `toggle` returns `{ flag, changed }` as the seam for the TASK-005 audit write.
