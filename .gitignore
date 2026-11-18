@@ -1,0 +1,34 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+build/
+out/
+coverage/
+*.tsbuildinfo
+.vite/
+
+# environment files: ignored except the placeholder example
+.env*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+
+# editor and OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# credentials and keys
+*.pem
+*.key
+*.p12
+*.p8
+*.keystore
+*.jks
+*credentials*.json
+*service-account*.json
