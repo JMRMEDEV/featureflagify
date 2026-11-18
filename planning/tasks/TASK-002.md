@@ -5,14 +5,14 @@
 | Field | Value |
 |-------|-------|
 | ID | TASK-002 |
-| Priority | P0 |
+| Priority | P1 |
 | Scope | MVP |
 | Type | infra |
 | Domain | security |
 | Subprojects | planning, api, ui, shared |
 | Stories | SEC-01 |
 | Depends on | TASK-001 |
-| Blocks | TASK-003 |
+| Blocks | — |
 | Status | ⬚ |
 | Created | 2026-11-18 |
 
@@ -39,8 +39,11 @@ security, ownership, Git and testing, kept short.
 
 ## Deferred
 
-- None.
+- Whole task deferred by the owner on 2026-11-18, now P1. It no longer blocks TASK-003.
+- Config review is done (`docs/evidence/TASK-002/config-review.md`): criteria pass on paper. Open defects D1-D8 in that file: shell allow/deny regex gaps, `*.env` deny, planner write paths, `web_fetch` trust patterns, `autoAllowReadonly`, agent `resources` paths.
+- Dummy-env enforcement probes and the session excerpt for TASK-012 are not run.
 
 ## Comments
 
 - **2026-11-18 16:15** — Created. Rule enforcement is checked by test, not by reading the config.
+- **2026-11-18 16:55** — Owner deferred the task and set it to P1. Read-only config review by ffy-qa found defects D1-D8, none fixed.

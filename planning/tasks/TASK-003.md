@@ -11,7 +11,7 @@
 | Domain | contract |
 | Subprojects | shared |
 | Stories | ARC-01, FLG-01 |
-| Depends on | TASK-001, TASK-002 |
+| Depends on | TASK-001 |
 | Blocks | TASK-004, TASK-007 |
 | Status | ⬚ |
 | Created | 2026-11-18 |
@@ -43,3 +43,4 @@ entry, error envelope. Export the env-name helper that maps a key to its
 ## Comments
 
 - **2026-11-18 16:15** — Created.
+- **2026-11-18 16:55** — Dependency on TASK-002 removed: the owner deferred it to P1.
