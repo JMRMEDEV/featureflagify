@@ -6,7 +6,7 @@ Execution order follows the dependencies. Security rules (TASK-002) come before
 any product code.
 
 ```text
-TASK-001 | P0 | Monorepo scaffold | ⬚ | shared,api,ui | platform | — | —
+TASK-001 | P0 | Monorepo scaffold | ✅ | shared,api,ui | platform | — | —
 TASK-002 | P0 | Agent security and steering rules | ⬚ | planning,api,ui,shared | security | TASK-001 | SEC-01
 TASK-003 | P0 | Shared contract | ⬚ | shared | contract | TASK-001,TASK-002 | ARC-01,FLG-01
 TASK-004 | P0 | Flag service core and in-memory repository | ⬚ | api | api | TASK-003 | FLG-01,FLG-03,ARC-02
