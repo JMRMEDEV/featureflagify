@@ -1,8 +1,19 @@
 import { describe, expect, it } from "vitest";
-import { SHARED_PACKAGE_NAME } from "./index";
+import * as shared from "./index";
 
-describe("shared entry", () => {
-  it("exports the package name", () => {
-    expect(SHARED_PACKAGE_NAME).toBe("@featureflagify/shared");
+describe("shared entry point", () => {
+  it.each([
+    "flagKeySchema",
+    "flagEnvName",
+    "flagSchema",
+    "auditEntrySchema",
+    "createFlagBodySchema",
+    "toggleFlagBodySchema",
+    "listFlagsResponseSchema",
+    "evaluateResponseSchema",
+    "auditResponseSchema",
+    "errorEnvelopeSchema",
+  ])("exports %s", (name) => {
+    expect(shared).toHaveProperty(name);
   });
 });
