@@ -81,7 +81,7 @@ Keys are created at runtime, so `shared` cannot list them at compile time.
 | D7 | HermOS generates and structures `planning/` | Settled |
 | D8 | Disable only. No delete and no archive in this iteration | Settled |
 | D9 | Fastify for the one example HTTP adapter | Proposed |
-| D10 | Validation errors return 400, following the Hermes convention | Proposed |
+| D10 | Validation errors return 400, following the convention of the author's earlier project | Proposed |
 | D11 | No authentication. Actor comes from an optional `x-actor` header | Proposed |
 
 Proposed decisions are the working assumption. Change them in this table, and
