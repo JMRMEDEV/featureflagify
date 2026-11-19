@@ -11,9 +11,11 @@ work with AI agents end to end**, not to show that I can hand-write a flag servi
 deliberate choice, based on the survey I answered for the same opportunity: it makes claims about
 AI-assisted delivery, and I wanted the repository to be the evidence.
 
-- **I did not hand-write the product code.** The requirements, goals, scope, architecture and
-  every decision are mine. I reviewed the code and ran the manual QA. The agents wrote all product
-  code, tests and evidence, inside path-ownership rules I defined.
+- **I did not hand-write the product code, and I did not stand back from it either.** The
+  requirements, goals, scope, architecture and every decision are mine, and so is the agent
+  setup that constrained the work. The agents wrote the product code, tests and evidence, inside
+  path-ownership rules I defined. I reviewed that code, corrected it where it was wrong, and ran
+  the manual QA myself (see [What I did myself](#what-i-did-myself)).
 - **The process is part of the deliverable.** Stories, tasks, decisions, agent definitions,
   steering, skills, QA reports and the manual walkthrough are all committed.
 - **Judge it as a first iteration of something a team would keep building**, as the brief says,
@@ -105,7 +107,21 @@ the original requirements and helped me size the scope to the constraints. A mul
 workflow did the building: one agent per domain (`shared`, `api`, `ui`), a QA agent and a
 planner. HermOS, my existing workflow, scaffolded the project management.
 
-I also reviewed the code and ran the manual QA myself.
+### What I did myself
+
+- Chose the feature, the scope, the stack and the layout, and made the settled decisions: API
+  first, then env, then code default (D1); keys created at runtime with a typed registry per
+  consumer (D2); disable as the only off-switch (D8).
+- Brought my own HermOS planning workflow, agent definitions, steering and skills, and set the
+  ownership, git and env-file rules the agents work under.
+- Approved the stories, tasks and decisions before any code was written, and approved the file
+  list and message of each commit.
+- Reviewed the code the agents wrote, and corrected the agents when they were wrong (see
+  [How AI was used](#how-ai-was-used)).
+- Ran the manual QA in the browser. It showed that a tester who creates a flag with a new key
+  still sees every declared flag as "Missing from API". That led to the
+  [How a flag becomes behavior](#how-a-flag-becomes-behavior) section and to the one-click
+  "Create" item on the list below.
 
 What I would do differently:
 
@@ -231,7 +247,8 @@ and one-line Conventional Commits of at most 50 characters (skill `conventional-
   - My first version of the shell deny rules blocked nothing, because the matcher needs the whole
     command string to match. A live probe caught it, and the patterns were rewritten.
 - **Verified by:** typecheck, lint and tests after each task, mutation proofs (break a rule, see a
-  test fail, restore), a curl run against the real server, and code review and a manual browser walkthrough by the owner.
+  test fail, restore), a curl run against the real server, and my own code review and manual
+  browser walkthrough.
 - **Not verified:** the final write rule for env files, the review findings of TASK-002, and a
   fresh-clone install.
 
